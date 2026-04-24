@@ -1,0 +1,99 @@
+{
+  "manifest_version": "0.2",
+  "name": "Ollama",
+  "display_name": "Ollama",
+  "version": "0.1.0",
+  "description": "Lets Claude query and manage a local Ollama server — list models, inspect them, pull/delete, and run generate/chat completions.",
+  "long_description": "Designed for users who run local LLMs alongside Claude. Claude can enumerate your installed models, check what's currently loaded in VRAM, run one-shot generate or chat completions against any local model, and (optionally) pull or delete models.\n\nTypical use: comparing Claude's output to a local model on the same prompt, running cheap bulk completions via a quantized model, or checking training-checkpoint models (e.g. custom Ollama imports from your own training runs) without opening a terminal.\n\n**Requires** a running Ollama server (`ollama serve` or the Ollama app). Default endpoint is `http://localhost:11434`; override via the `ollama_url` user config if you run it on a different host/port. No npm dependencies — pure Node over the HTTP API.",
+  "author": {
+    "name": "Luke Lamb",
+    "url": "https://github.com/LukeLamb"
+  },
+  "homepage": "https://github.com/LukeLamb/claude-ollama-mcp",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LukeLamb/claude-ollama-mcp"
+  },
+  "documentation": "https://github.com/LukeLamb/claude-ollama-mcp#readme",
+  "support": "https://github.com/LukeLamb/claude-ollama-mcp/issues",
+  "icon": "icon.png",
+  "privacy_policies": [
+    "https://github.com/LukeLamb/claude-ollama-mcp#privacy-policy"
+  ],
+  "user_config": {
+    "ollama_url": {
+      "type": "string",
+      "title": "Ollama server URL",
+      "description": "Base URL of the Ollama HTTP API. Leave blank to use http://localhost:11434.",
+      "default": "",
+      "required": false
+    }
+  },
+  "server": {
+    "type": "node",
+    "entry_point": "server.js",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/server.js",
+        "--ollama-url",
+        "${user_config.ollama_url}"
+      ]
+    }
+  },
+  "tools": [
+    {
+      "name": "ollama_status",
+      "description": "Health check: whether the Ollama server is reachable and its version. Useful as a precondition before other tools."
+    },
+    {
+      "name": "list_models",
+      "description": "List locally-installed models (name, size, digest, modified timestamp, parameter size, quantization)."
+    },
+    {
+      "name": "list_running",
+      "description": "List models currently loaded into VRAM (name, size, expires_at). Empty list means Ollama is idle."
+    },
+    {
+      "name": "show_model",
+      "description": "Show detailed info for one model: modelfile excerpt, parameters, template, capabilities, architecture, parameter count, quantization level."
+    },
+    {
+      "name": "generate",
+      "description": "Run a one-shot text completion against a local model (non-streaming). Returns the full response plus evaluation timings."
+    },
+    {
+      "name": "chat",
+      "description": "Run a chat completion against a local model with message history (non-streaming). Returns the assistant's reply plus timings."
+    },
+    {
+      "name": "pull_model",
+      "description": "Download a model from the Ollama registry. Blocks until the pull completes — can take a while for large models."
+    },
+    {
+      "name": "delete_model",
+      "description": "Delete a locally-installed model. Does not affect remote-registry copies."
+    }
+  ],
+  "keywords": [
+    "ollama",
+    "llm",
+    "local-inference",
+    "ai",
+    "ml",
+    "claude-desktop",
+    "linux"
+  ],
+  "license": "MIT",
+  "compatibility": {
+    "claude_desktop": ">=0.10.0",
+    "platforms": [
+      "linux",
+      "darwin",
+      "win32"
+    ],
+    "runtimes": {
+      "node": ">=16.0.0"
+    }
+  }
+}
