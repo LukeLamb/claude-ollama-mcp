@@ -2,7 +2,7 @@
   "manifest_version": "0.2",
   "name": "Ollama",
   "display_name": "Ollama",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Lets Claude query and manage a local Ollama server — list models, inspect them, pull/delete, and run generate/chat completions.",
   "long_description": "Designed for users who run local LLMs alongside Claude. Claude can enumerate your installed models, check what's currently loaded in VRAM, run one-shot generate or chat completions against any local model, and (optionally) pull or delete models.\n\nTypical use: comparing Claude's output to a local model on the same prompt, running cheap bulk completions via a quantized model, or checking training-checkpoint models (e.g. custom Ollama imports from your own training runs) without opening a terminal.\n\n**Requires** a running Ollama server (`ollama serve` or the Ollama app). Default endpoint is `http://localhost:11434`; override via the `ollama_url` user config if you run it on a different host/port. No npm dependencies — pure Node over the HTTP API.",
   "author": {
