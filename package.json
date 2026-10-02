@@ -1,6 +1,6 @@
 {
   "name": "claude-ollama-mcp",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "MCP server for managing and querying a local Ollama server — list/show/pull/delete models, run generate/chat completions.",
   "main": "server.js",
   "license": "MIT",
